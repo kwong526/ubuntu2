@@ -1,0 +1,7 @@
+[Unit] 
+Description=run bckup script 
+[Service] 
+ExecStart=/$HOME/bin/bckup 
+[Install] 
+WantedBy=multi-user.target 
+
