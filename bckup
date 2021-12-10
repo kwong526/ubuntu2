@@ -1,0 +1,28 @@
+#!/bin/bash
+
+while getopts ":d" flag; do
+   case ${flag} in
+      d ) # specify a directory
+	DIR=$OPTARG
+	DATE=$(date +"%a-%d-%b-%Y-%H:%M.tar.gz")
+
+	if [[ -z "$DIR" ]]; then
+	   tar -cf "backup-$DATE" /exam/
+   	else
+	   tar -cf "backup-$DATE" "$DIR"
+	fi
+
+	rsync -a $HOME/bin/ $HOME/backups/ --remove-source-files 
+        ;;
+      \? ) # default case if no valid options given
+        echo "No such option: $OPTARG."
+        exit 1
+        ;;
+    esac
+    exit 0
+  done
+
+  if [[ $OPTIND -eq 1 ]]; then
+    echo "Please provide an option. [-h] for help."
+    exit 0
+  fi
